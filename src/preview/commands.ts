@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import * as path from "path";
 import { Container } from "../container";
 import { showPreviewHtml } from "./previewHtml";
 
@@ -48,7 +49,7 @@ export function registerPreviewCommand() {
             // Create and show webview panel
             const panel = vscode.window.createWebviewPanel(
                 "rtfPreview",
-                "RTF Preview",
+                `Preview ${path.basename(document.fileName)}`,
                 {
                     viewColumn: vscode.ViewColumn.Beside,
                     preserveFocus: true
@@ -56,6 +57,13 @@ export function registerPreviewCommand() {
                 {
                     enableScripts: true
                 }
+            );
+
+            // Set panel icon
+            panel.iconPath = vscode.Uri.joinPath(
+                Container.context.extensionUri,
+                "images",
+                "icon.png"
             );
 
             panel.onDidDispose(() => {
