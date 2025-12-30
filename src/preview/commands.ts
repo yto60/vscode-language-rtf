@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { Container } from "../container";
-import { getPreviewHtml } from "./previewHtml";
+import { showPreviewHtml } from "./previewHtml";
 
 export function registerPreviewCommand() {
     Container.context.subscriptions.push(
@@ -35,7 +35,7 @@ export function registerPreviewCommand() {
 
             // Get RTF text and set HTML content
             const rtfText = document.getText();
-            panel.webview.html = getPreviewHtml(rtfText, panel.webview);
+            showPreviewHtml(rtfText, panel.webview);
         })
     );
 }

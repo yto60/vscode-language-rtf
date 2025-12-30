@@ -99,22 +99,25 @@
         "test": "npm run test-compile && npm run just-test"
     },
     "devDependencies": {
-        "@types/vscode": "^1.74.0",
-        "@types/mocha": "^10.0.0",
         "@types/glob": "^8.1.0",
+        "@types/mocha": "^10.0.0",
         "@types/node": "^18.17.0",
         "@types/semver": "^7.3.9",
-        "@vscode/test-electron": "^2.5.2",
+        "@types/vscode": "^1.74.0",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
         "@typescript-eslint/parser": "^6.0.0",
+        "@vscode/test-electron": "^2.5.2",
         "eslint": "^8.1.0",
         "eslint-config-vscode-ext": "^1.1.0",
         "glob": "^7.1.7",
+        "mocha": "^11.3.0",
         "terser-webpack-plugin": "^5.2.4",
         "ts-loader": "^9.2.5",
         "typescript": "^5.3.3",
         "webpack": "^5.99.8",
-        "webpack-cli": "^4.8.0",
-        "mocha": "^11.3.0"
+        "webpack-cli": "^4.8.0"
+    },
+    "dependencies": {
+        "@iarna/rtf-to-html": "^1.1.0"
     }
 }

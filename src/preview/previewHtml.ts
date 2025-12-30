@@ -1,28 +1,7 @@
 import * as vscode from "vscode";
+import * as rtfToHTML from '@iarna/rtf-to-html';
 
-/**
- * Converts RTF text to HTML for preview display.
- * This is a placeholder implementation that can be replaced with a proper RTF parser later.
- */
-function convertRtfToHtml(rtfText: string): string {
-    // For now, just escape the text and display it in a pre tag
-    // This can be replaced with a proper RTF-to-HTML conversion library later
-    const escapedText = rtfText
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-
-    return `<pre>${escapedText}</pre>`;
-}
-
-/**
- * Generates HTML content for the RTF preview webview.
- */
-export function getPreviewHtml(rtfText: string, webview: vscode.Webview): string {
-    const htmlContent = convertRtfToHtml(rtfText);
-
+function outputTemplate (_doc: any, _defaults: any, content: string) {
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,8 +26,16 @@ export function getPreviewHtml(rtfText: string, webview: vscode.Webview): string
     </style>
 </head>
 <body>
-    ${htmlContent}
+${content.replace(/\n/g, '\n    ')}
 </body>
-</html>`;
-}
+</html>`
+  }
 
+/**
+ * Generates and sets HTML content for the RTF preview webview.
+ */
+export function showPreviewHtml(rtfText: string, webview: vscode.Webview) {
+    rtfToHTML.fromString(rtfText, { template: outputTemplate }, (err, res) => {
+        webview.html = res
+    })
+}
