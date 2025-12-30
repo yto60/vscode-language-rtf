@@ -76,9 +76,31 @@
             },
             {
                 "command": "rtf.preview",
-                "title": "%rtf.commands.preview.title%"
+                "title": "%rtf.commands.preview.title%",
+                "icon": "$(open-preview)"
             }
-        ]
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "rtf.preview",
+                    "when": "resourceExtname == .rtf"
+                }
+            ],
+            "editor/title": [
+                {
+                    "command": "rtf.preview",
+                    "when": "resourceExtname == .rtf",
+                    "group": "navigation@10"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "rtf.preview",
+                    "when": "resourceExtname == .rtf"
+                }
+            ]
+        }
     },
     "eslintConfig": {
         "extends": [
