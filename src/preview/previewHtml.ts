@@ -1,7 +1,16 @@
 import * as vscode from "vscode";
-import * as rtfToHTML from '@iarna/rtf-to-html';
+import * as rtfToHTML from "@iarna/rtf-to-html";
 
-function outputTemplate (_doc: any, _defaults: any, content: string) {
+function escapeHtml(text: string): string {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function outputTemplate(_doc: unknown, _defaults: unknown, content: string) {
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +45,25 @@ ${content.replace(/\n/g, '\n    ')}
  */
 export function showPreviewHtml(rtfText: string, webview: vscode.Webview) {
     rtfToHTML.fromString(rtfText, { template: outputTemplate }, (err, res) => {
-        webview.html = res
-    })
+        if (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            webview.html = outputTemplate(
+                null,
+                null,
+                `<pre>${escapeHtml(`Error converting RTF: ${message}`)}</pre>`
+            );
+            return;
+        }
+
+        if (!res) {
+            webview.html = outputTemplate(
+                null,
+                null,
+                "<pre>Empty preview content.</pre>"
+            );
+            return;
+        }
+
+        webview.html = res;
+    });
 }
